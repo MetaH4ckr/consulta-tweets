@@ -1,0 +1,17 @@
+tomcat:
+  image: tomcat
+  ports:
+    - "8080:8080"
+  links:
+    - db
+  volumes:
+    - ./consulta-tweets-api.war:/usr/local/tomcat/webapps/consulta-tweets-api.war
+    - ./consulta-tweets-web.war:/usr/local/tomcat/webapps/consulta-tweets-web.war
+  environment:
+    - "JAVA_OPTS=-Dspring.data.mongodb.host=db"
+
+db:
+  image: mongo
+  ports:
+    - "27017:27017"
+  command: -smallfiles -nojournal
